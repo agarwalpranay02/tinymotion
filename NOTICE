@@ -1,0 +1,10 @@
+Third-party components
+- Next.js, React (MIT) · next-intl (MIT) · better-auth (MIT) · Drizzle ORM (Apache-2.0) · PGlite (Apache-2.0)
+- TensorFlow and Keras (Apache-2.0) · NumPy (BSD-3) · SciPy (BSD-3) · scikit-learn (BSD-3)
+- Tailwind CSS (MIT) · Zod (MIT) · qrcode-generator (MIT)
+- Bricolage Grotesque, Hanken Grotesk and JetBrains Mono typefaces (SIL OFL 1.1) via Fontsource
+Data
+- Reyes-Ortiz, Anguita, Ghio, Oneto and Parra (2012). Human Activity Recognition Using Smartphones.
+  UCI Machine Learning Repository. doi:10.24432/C54S4K. CC BY 4.0.
+  The models are trained on its training windows; the replay recordings and sample CSV are
+  reconstructed from its test windows.

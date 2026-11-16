@@ -1,0 +1,122 @@
+{
+ "pipeline_check": {
+  "official": 0.9307770614183916,
+  "live_pipeline": 0.9280624363759755,
+  "n": 2947,
+  "model": "tinymotion-anywhere"
+ },
+ "paper_protocol": {
+  "MobileNet1D (paper code)": {
+   "params": 12870,
+   "accuracy": 91.65,
+   "tflite_fp32_kb": 58.0,
+   "tflite_int8_dynamic_kb": 30.3,
+   "macro_auc": 0.9867
+  },
+  "Baseline CNN (paper code)": {
+   "params": 257254,
+   "accuracy": 92.33,
+   "tflite_fp32_kb": 1014.6,
+   "tflite_int8_dynamic_kb": 270.4,
+   "macro_auc": 0.9906
+  }
+ },
+ "per_seed": {
+  "tinymotion-anywhere": [
+   {
+    "seed": 0,
+    "accuracy": 0.9307770614183916,
+    "rotated": 0.9250084832032576,
+    "macro_f1": 0.9314089768639251
+   },
+   {
+    "seed": 1,
+    "accuracy": 0.9487614523243977,
+    "rotated": 0.9423142178486597,
+    "macro_f1": 0.9493533868639602
+   },
+   {
+    "seed": 2,
+    "accuracy": 0.9178825924669155,
+    "rotated": 0.9080420766881574,
+    "macro_f1": 0.9195462940872746
+   },
+   {
+    "seed": 3,
+    "accuracy": 0.9429928741092637,
+    "rotated": 0.9402782490668476,
+    "macro_f1": 0.9437466654757006
+   },
+   {
+    "seed": 4,
+    "accuracy": 0.9294197488971836,
+    "rotated": 0.9253478113335596,
+    "macro_f1": 0.9295238612367368
+   }
+  ],
+  "tinymotion-study": [
+   {
+    "seed": 0,
+    "accuracy": 0.9518154054971157,
+    "rotated": 0.7556837461825585,
+    "macro_f1": 0.9520753132262604
+   },
+   {
+    "seed": 1,
+    "accuracy": 0.9372242958941296,
+    "rotated": 0.7811333559552087,
+    "macro_f1": 0.9379443310617579
+   },
+   {
+    "seed": 2,
+    "accuracy": 0.9321343739395996,
+    "rotated": 0.7777400746521886,
+    "macro_f1": 0.9319888853278426
+   },
+   {
+    "seed": 3,
+    "accuracy": 0.9314557176789956,
+    "rotated": 0.7760434340006787,
+    "macro_f1": 0.9325150437780039
+   },
+   {
+    "seed": 4,
+    "accuracy": 0.9144893111638955,
+    "rotated": 0.7896165592127588,
+    "macro_f1": 0.9155070859150612
+   }
+  ],
+  "paper-mobilenet1d": [
+   {
+    "seed": 0,
+    "accuracy": 0.9267051238547676,
+    "rotated": 0.7967424499491008,
+    "macro_f1": 0.9258441221951782
+   },
+   {
+    "seed": 1,
+    "accuracy": 0.9199185612487275,
+    "rotated": 0.8140481845945029,
+    "macro_f1": 0.9204961542744227
+   },
+   {
+    "seed": 2,
+    "accuracy": 0.9117746861214795,
+    "rotated": 0.8038683406854428,
+    "macro_f1": 0.9114731469823694
+   },
+   {
+    "seed": 3,
+    "accuracy": 0.9155072955548015,
+    "rotated": 0.7936884967763828,
+    "macro_f1": 0.9163883357731027
+   },
+   {
+    "seed": 4,
+    "accuracy": 0.9324737020699015,
+    "rotated": 0.8042076688157448,
+    "macro_f1": 0.9326775302574131
+   }
+  ]
+ }
+}

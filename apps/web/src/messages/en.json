@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "title": "TinyMotion: activity recognition that runs on your phone",
+    "description": "Your phone's motion sensors recognise walking, stairs, sitting, standing and lying in real time, on the device. Download the same tiny models for microcontrollers. Built on peer-reviewed research.",
+    "tagline": "AI that knows how you move."
+  },
+  "common": {
+    "back": "Back",
+    "loading": "Loading",
+    "learnMore": "Learn more",
+    "notFound": "This page doesn't exist.",
+    "goHome": "Go to the home page",
+    "offlineTitle": "You're offline",
+    "offlineBody": "Pages you've opened before still work, and live recognition runs fully offline once the page has loaded.",
+    "errorTitle": "Something went wrong",
+    "errorBody": "The page hit an error. Try again; if it keeps happening, tell us at {email}.",
+    "retry": "Try again"
+  },
+  "account": {
+    "title": "Your account",
+    "signInTitle": "Sign in to TinyMotion",
+    "signInSub": "An account is only needed to create API keys. Live recognition, Analyze, Record and the Studio work without one.",
+    "google": "Continue with Google",
+    "emailLabel": "Email address",
+    "magic": "Email me a sign-in link",
+    "magicSent": "Check your inbox for a sign-in link.",
+    "devLogin": "Developer sign-in (local only)",
+    "signOut": "Sign out",
+    "plan": "Everything on TinyMotion is free, including the API.",
+    "keys": "API keys",
+    "keysSub": "Keys let your servers call the TinyMotion API. Treat them like passwords.",
+    "newKey": "Create key",
+    "keyName": "Key name",
+    "keyCreated": "Copy this key now. You won't see it again.",
+    "revoke": "Revoke",
+    "usage": "API calls this month",
+    "noKeys": "No keys yet.",
+    "authUnavailable": "Sign-in is not configured on this server yet."
+  },
+  "contact": {
+    "contactTitle": "Get in touch",
+    "name": "Name",
+    "email": "Email",
+    "org": "Organisation",
+    "message": "What would you like to talk about?",
+    "send": "Send message",
+    "sent": "Thanks. I'll reply within two working days."
+  }
+}

@@ -1,0 +1,9 @@
+Copyright (c) 2026 Pranay Agarwal. All rights reserved.
+
+This repository (the TinyMotion web application, trained model weights, generated C code,
+TensorFlow Lite models and training scripts) is proprietary. You may download and use the
+published models for personal, educational and research projects. Any other copying,
+modification, redistribution or commercial use requires written permission.
+
+The training data is not part of this licence: the UCI HAR dataset (doi:10.24432/C54S4K)
+is © its authors under CC BY 4.0. Third-party components keep their own licences; see NOTICE.

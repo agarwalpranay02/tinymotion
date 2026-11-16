@@ -1,0 +1,41 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+permissions: { contents: read }
+concurrency: { group: "ci-${{ github.ref }}", cancel-in-progress: true }
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: apps/web } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 22, cache: npm, cache-dependency-path: apps/web/package-lock.json }
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx eslint src
+      - run: npm test
+      - run: npm run build
+        env: { NEXT_TELEMETRY_DISABLED: 1 }
+      - name: End-to-end (Playwright, desktop and mobile)
+        run: |
+          npx playwright install --with-deps chromium
+          cp .env.example .env.local
+          cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/ && cp -r drizzle .next/standalone/
+          (cd .next/standalone && PORT=3000 node server.js &) && npx wait-on -t 60000 http://localhost:3000/api/v1/health
+          npx playwright test
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with: { name: playwright-report, path: apps/web/playwright-report, retention-days: 7 }
+
+  models:
+    # The shipped C headers must compile cleanly and reproduce TensorFlow's outputs.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.12" }
+      - run: pip install numpy==2.*
+      - run: python ml/check_c.py
