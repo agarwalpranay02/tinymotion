@@ -42,11 +42,11 @@ It's a progressive web app, so it installs to the home screen and the Live mode 
 
 All numbers are on the official UCI HAR test set: 9 people the models never saw, 2,947 windows. Model selection used only the training subjects. Four of them (1, 7, 22, 30) were held out to pick the epoch, then the model was retrained on all 21 and tested once.
 
-| Model | Parameters | Shipped model | Across seeds | Phone rotated | INT8 size |
+| Model | Parameters | Shipped model | Across seeds | Phone rotated (seed mean) | INT8 size · accuracy |
 |---|---:|---:|---:|---:|---:|
-| TinyMotion Anywhere | 35,558 | 93.08% | 93.4 ± 1.1% (5 seeds) | 92.8 ± 1.2% | 85.7 KB |
-| TinyMotion Study | 35,558 | 95.18% | 93.3 ± 1.2% (5 seeds) | 77.6 ± 1.1% | 85.7 KB |
-| Paper MobileNet1D | 12,870 | 92.67% | 92.1 ± 0.7% (5 seeds) | 80.3 ± 0.7% | 31.7 KB |
+| TinyMotion Anywhere | 35,558 | 93.08% | 93.4 ± 1.1% (5 seeds) | 92.8 ± 1.2% | 85.7 KB · 93.5% |
+| TinyMotion Study | 35,558 | 95.18% | 93.3 ± 1.2% (5 seeds) | 77.6 ± 1.1% | 85.7 KB · 94.6% |
+| Paper MobileNet1D | 12,870 | 92.67% | 92.1 ± 0.7% (5 seeds) | 80.3 ± 0.7% | 31.7 KB · 92.7% |
 
 "Phone rotated" applies a random rotation about gravity to every test window, which is what happens when the phone sits in a pocket at a different angle. The Anywhere model is trained for that and is the default on the site.
 
@@ -54,7 +54,7 @@ The live pipeline was checked separately: running the test set through the in-br
 
 For reference, the paper's own training script under the same evaluation reaches 91.65% (MobileNet1D, 12,870 parameters) and 92.33% (baseline CNN, 257,254 parameters).
 
-Every export is checked against Keras on the full test set: the TypeScript engine, the C header compiled with `gcc -Wall -Wextra -Werror`, and both TFLite files.
+Every export is checked on the full test set. The TypeScript engine, the C header (compiled with `gcc -Wall -Wextra -Werror`) and the fp32 TFLite file give the same accuracy as Keras. The INT8 file is quantised, so its accuracy differs slightly and is listed in the table.
 
 ## Architecture
 

@@ -10,7 +10,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const { locale } = await params;
   setRequestLocale(locale);
   const live = modelMeta("tinymotion-anywhere");
-  const study = modelMeta("tinymotion-study");
   const facts = researchFacts();
 
   const steps = [
@@ -21,7 +20,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   ];
   const faq = [
     ["Is anything uploaded?", "No. Live, Analyze and Record run entirely in your browser. Sensor readings and files never leave the device. Only the developer API, which you call yourself, sends data to a server."],
-    ["How accurate is it?", `On the 9 people in the UCI HAR test set, whom the models never saw, TinyMotion Study scores ${pct(study.metrics.mean_accuracy)} on average over ${study.metrics.seeds} training runs (± ${pct(study.metrics.std_accuracy)}). Real life is messier than a lab: phone placement matters most, and sitting versus standing is the hardest pair.`],
+    ["How accurate is it?", `On the 9 people in the UCI HAR test set, whom the models never saw, the default model, TinyMotion Anywhere, scores ${pct(live.metrics.mean_accuracy)} on average over ${live.metrics.seeds} training runs (± ${pct(live.metrics.std_accuracy)}), and ${pct(live.metrics.mean_rotated_accuracy)} when the phone sits at a different angle. Real life is messier than a lab: phone placement matters most, and sitting versus standing is the hardest pair.`],
     ["Where should the phone be?", "Where it moves with your hips: a front trouser pocket or clipped to a waistband, like the study's volunteers. Held in the hand, walking and stairs still work, but posture is guesswork."],
     ["Which phones work?", "Any phone with a modern browser and motion sensors: Android with Chrome, Samsung Internet or Firefox, and iPhone with Safari (it asks for motion access once). Laptops don't have the sensors, so they get the replay instead."],
     ["Can I run the model on a microcontroller?", `Yes. The Studio has the same model as dependency-free C (${kb(live.formats.c.bytes ?? 0)} of source, float32) and as a full-integer INT8 TensorFlow Lite file (${kb(live.formats.tflite_int8.bytes ?? 0)}) for TensorFlow Lite Micro. Both are checked against TensorFlow on the whole test set.`],
@@ -55,7 +54,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <h2 id="spec-title" className="sr-only">Key figures</h2>
         <dl className="grid gap-px overflow-hidden rounded-[10px] border border-[var(--rule)] bg-[var(--rule)] sm:grid-cols-2 lg:grid-cols-4">
           {[
-            [pct(study.metrics.mean_accuracy), `mean accuracy on ${RESEARCH.dataset.testSubjects} unseen people`, `${study.metrics.seeds} training runs, ± ${pct(study.metrics.std_accuracy)}`],
+            [pct(live.metrics.mean_accuracy), `mean accuracy on ${RESEARCH.dataset.testSubjects} unseen people`, `default model, ${live.metrics.seeds} training runs, ± ${pct(live.metrics.std_accuracy)}`],
             [live.params.toLocaleString("en"), "parameters", "a residual depthwise-separable 1D CNN"],
             [kb(live.formats.tflite_int8.bytes ?? 0), "INT8 TensorFlow Lite model", `${pct(live.formats.tflite_int8.accuracy)} accuracy after quantisation`],
             [pct(facts.pipeline_check.live_pipeline), "with the on-device filter", `vs ${pct(facts.pipeline_check.official)} with the dataset's own preprocessing`],

@@ -90,7 +90,7 @@ print(meta["classes"][int(it.get_tensor(out["index"]).argmax())])`;
             <dl className="mt-5 [&_dd]:whitespace-nowrap">
               <div className="spec"><dt>Accuracy, {m.meta.metrics.seeds}-run mean</dt><dd>{(m.meta.metrics.mean_accuracy * 100).toFixed(1)} ± {pct(m.meta.metrics.std_accuracy)}</dd></div>
               <div className="spec"><dt>This file</dt><dd>{pct(m.meta.metrics.test_accuracy)}</dd></div>
-              <div className="spec"><dt>Phone rotated</dt><dd>{pct(m.meta.metrics.mean_rotated_accuracy)}</dd></div>
+              <div className="spec"><dt>Phone rotated, {m.meta.metrics.seeds}-run mean</dt><dd>{pct(m.meta.metrics.mean_rotated_accuracy)}</dd></div>
               <div className="spec"><dt>Parameters</dt><dd>{m.meta.params.toLocaleString("en")}</dd></div>
               <div className="spec"><dt>Weights, float32</dt><dd>{kb(m.meta.formats.engine.bytes ?? 0)}</dd></div>
               <div className="spec"><dt>INT8 TFLite</dt><dd>{kb(m.meta.formats.tflite_int8.bytes ?? 0)} · {pct(m.meta.formats.tflite_int8.accuracy)}</dd></div>
