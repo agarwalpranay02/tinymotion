@@ -3,6 +3,7 @@ import { mkdirSync } from "node:fs";
 import path from "node:path";
 import * as schema from "./schema";
 import { env } from "./env";
+import { pgConfig } from "./pgconfig";
 
 /**
  * Postgres in production (DATABASE_URL), embedded PGlite (Postgres compiled to WASM)
@@ -17,7 +18,7 @@ async function create(): Promise<DB> {
   if (env.DATABASE_URL) {
     const { Pool } = await import("pg");
     const { drizzle } = await import("drizzle-orm/node-postgres");
-    const pool = new Pool({ connectionString: env.DATABASE_URL, max: 10, ssl: env.DATABASE_URL.includes("sslmode=disable") ? false : { rejectUnauthorized: false } });
+    const pool = new Pool({ ...pgConfig(env.DATABASE_URL), max: 5 });
     const db = drizzle(pool, { schema });
     if (process.env.AUTO_MIGRATE === "1") {
       const { migrate } = await import("drizzle-orm/node-postgres/migrator");

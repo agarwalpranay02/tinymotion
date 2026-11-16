@@ -113,3 +113,14 @@ describe("service worker", () => {
     expect(readFileSync("public/sw.js", "utf8")).toContain(`/models/${MODEL_VERSION}/tinymotion-anywhere`);
   });
 });
+
+describe("database TLS", () => {
+  it("verifies certificates for hosted Postgres and respects sslmode=disable", async () => {
+    const { pgConfig } = await import("../src/lib/server/pgconfig");
+    const hosted = pgConfig("postgresql://u:p@ep-x.us-east-1.aws.neon.tech/db?sslmode=require&channel_binding=require");
+    expect(hosted.ssl).toBe(true);
+    expect(hosted.connectionString).not.toContain("sslmode");
+    expect(hosted.connectionString).toContain("channel_binding=require");
+    expect(pgConfig("postgres://localhost:5432/tinymotion?sslmode=disable").ssl).toBe(false);
+  });
+});
