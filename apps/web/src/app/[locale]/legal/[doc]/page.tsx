@@ -30,11 +30,14 @@ const DOCS: Record<string, { title: string; body: ReactNode }> = {
           "Contact form: your name, email, organisation and message, stored so we can reply.",
           "Rate limiting: a salted hash of your IP address, kept briefly in memory or in our cache provider.",
           "Security reports: browsers may send us Content-Security-Policy violation reports, which contain the page URL.",
+          "Visit counts: Vercel Web Analytics, our host's privacy-friendly analytics, counts page views without cookies. It records the page, referrer, country, browser, operating system and device type; visitors are told apart only by a hash that is discarded after a day. Sensor data is never included.",
         ]} />
+        <H>Service providers</H>
+        <P>The site and API are hosted by Vercel, and account data is stored in a Neon Postgres database, both in the United States (Washington, D.C. region). Google handles Google sign-in. Each processes data only to provide its service to us.</P>
         <H>What we don&apos;t do</H>
-        <UL items={["No advertising, no ad trackers, no selling or sharing of personal data.", "No third-party analytics scripts.", "Your sensor data is never used to train models."]} />
+        <UL items={["No advertising, no ad trackers, no selling or sharing of personal data.", "No cross-site tracking: visit counts stay with our host and are never combined with other sites.", "Your sensor data is never used to train models."]} />
         <H>Cookies</H>
-        <P>Only essential cookies: a session cookie when you sign in, and a language preference. Nothing non-essential is set.</P>
+        <P>Only essential cookies: a session cookie when you sign in, and a language preference. Visit counting uses no cookies, and nothing non-essential is set.</P>
         <H>Retention and your rights</H>
         <P>Account data is kept while your account is active and deleted within 30 days of a deletion request; contact messages are kept for up to two years. You can ask to access, correct or erase your data, withdraw consent, or nominate someone to act for you, by writing to {SITE.email}. We reply within 30 days. If you are not satisfied, you may complain to the Data Protection Board of India.</P>
       </>
