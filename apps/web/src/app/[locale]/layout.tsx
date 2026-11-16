@@ -41,7 +41,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       images: [SHARE_CARD],
     },
     twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: [SHARE_CARD] },
-    appleWebApp: { capable: true, title: SITE.name, statusBarStyle: "default" },
+    appleWebApp: { capable: true, title: SITE.name, statusBarStyle: "black" },
+    // Older iOS versions only open full screen with the apple- prefixed tag
+    other: { "apple-mobile-web-app-capable": "yes" },
     formatDetection: { telephone: false },
     icons: { icon: "/icons/icon.svg", apple: "/icons/apple-touch-icon.png" },
     robots: { index: true, follow: true },

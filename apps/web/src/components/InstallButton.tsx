@@ -2,17 +2,21 @@
 import { useEffect, useId, useState } from "react";
 
 type BIPEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
-type Mode = "prompt" | "ios" | "mac-safari" | null;
+type Mode = "prompt" | "ios" | "mac-safari" | "firefox-android" | null;
 
 /** Steps for browsers that install web apps from their own menu instead of a prompt. */
-const STEPS: Record<"ios" | "mac-safari", { title: string; steps: string[] }> = {
+const STEPS: Record<"ios" | "mac-safari" | "firefox-android", { title: string; steps: string[] }> = {
   ios: {
     title: "Install on iPhone or iPad",
     steps: [
-      "Open this page in Safari.",
+      "Open this page in Safari (or Chrome, on iOS 16.4 and later).",
       "Tap the Share button (the square with an arrow pointing up).",
       "Scroll down and tap “Add to Home Screen”, then “Add”.",
     ],
+  },
+  "firefox-android": {
+    title: "Install on Android",
+    steps: ["Tap the menu button (⋮) in Firefox.", "Tap “Add app to Home screen” (or “Install”), then “Add”."],
   },
   "mac-safari": {
     title: "Install on Mac",
@@ -31,6 +35,7 @@ function detect(): Mode {
   if (ios) return "ios";
   const macSafari = /Macintosh/.test(ua) && /Safari\//.test(ua) && !/Chrome|Chromium|CriOS|Edg|Firefox|OPR/.test(ua);
   if (macSafari) return "mac-safari";
+  if (/Android/.test(ua) && /Firefox\//.test(ua)) return "firefox-android";
   return null;
 }
 

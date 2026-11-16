@@ -19,6 +19,11 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
       { src: "/icons/icon.svg", sizes: "any", type: "image/svg+xml" },
     ],
+    // Shown in the richer install sheet on Android and desktop Chrome / Edge
+    screenshots: [
+      { src: "/screenshots/live-narrow.webp", sizes: "780x1688", type: "image/webp", form_factor: "narrow", label: "Live recognition on a phone" },
+      { src: "/screenshots/home-wide.webp", sizes: "1280x800", type: "image/webp", form_factor: "wide", label: "A real recording, classified as you watch" },
+    ],
     shortcuts: [
       { name: "Go live", url: "/live?source=shortcut" },
       { name: "Analyze a recording", url: "/analyze?source=shortcut" },

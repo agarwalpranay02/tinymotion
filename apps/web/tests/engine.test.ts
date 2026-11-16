@@ -105,3 +105,11 @@ describe("CSV import", () => {
     expect(u.gyroScale).toBeCloseTo(Math.PI / 180);
   });
 });
+
+describe("service worker", () => {
+  it("precaches the model folder for the current model version", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { MODEL_VERSION } = await import("../src/lib/engine/version");
+    expect(readFileSync("public/sw.js", "utf8")).toContain(`/models/${MODEL_VERSION}/tinymotion-anywhere`);
+  });
+});

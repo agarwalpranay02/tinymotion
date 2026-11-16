@@ -131,3 +131,26 @@ test("an iPhone refusal explains how to allow motion access again", async ({ bro
   await expect(page.getByText("Motion access was turned off")).toBeVisible({ timeout: 10_000 });
   await ctx.close();
 });
+
+test("the installed app opens Live offline, with the model ready", async ({ page, context, browserName }) => {
+  test.skip(browserName !== "chromium", "service workers in Chromium");
+  await page.goto("/");
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.reload(); // let the worker take control
+  await page.waitForFunction(async () => (await caches.keys()).some((k) => k.endsWith("-static")) && !!navigator.serviceWorker.controller);
+  await page.waitForTimeout(1500);
+  await context.setOffline(true);
+  await page.goto("/live?source=pwa");
+  await expect(page.getByRole("button", { name: "Start live recognition" })).toBeEnabled({ timeout: 15_000 });
+  await context.setOffline(false);
+});
+
+test("the web app manifest is installable", async ({ request }) => {
+  const m = await (await request.get("/manifest.webmanifest")).json();
+  expect(m.display).toBe("standalone");
+  expect(m.start_url).toBeTruthy();
+  for (const size of ["192x192", "512x512"]) expect(m.icons.some((i: { sizes: string }) => i.sizes === size)).toBe(true);
+  expect(m.icons.some((i: { purpose?: string }) => i.purpose === "maskable")).toBe(true);
+  for (const s of [...m.icons, ...m.screenshots]) expect((await request.get(s.src)).status()).toBe(200);
+  expect((await request.get("/icons/apple-touch-icon.png")).status()).toBe(200);
+});

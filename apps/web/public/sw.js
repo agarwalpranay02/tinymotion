@@ -1,13 +1,27 @@
 /* TinyMotion service worker: offline-first for the app shell, the models and the demo recordings. */
-const VERSION = "tinymotion-v1";
+const VERSION = "tinymotion-v2";
+// Keep in step with MODEL_VERSION in src/lib/engine/version.ts (a unit test checks this).
+const MODEL_DIR = "/models/2026.11/tinymotion-anywhere";
 const STATIC = `${VERSION}-static`;
 const PAGES = `${VERSION}-pages`;
 const PRECACHE_PAGES = ["/offline", "/live"];
 
+/** Caches Live's page, the scripts and styles it loads, and the default model, so the installed app opens offline. */
+async function precache() {
+  const pages = await caches.open(PAGES);
+  const stat = await caches.open(STATIC);
+  await Promise.all(PRECACHE_PAGES.map((u) => pages.add(new Request(u, { cache: "reload" })).catch(() => {})));
+  try {
+    const html = await (await pages.match("/live"))?.text();
+    const assets = [...new Set((html || "").match(/\/_next\/static\/[^"'\s)]+/g) || [])];
+    await Promise.all([...assets, `${MODEL_DIR}/model.json`, `${MODEL_DIR}/weights.bin`].map((u) => stat.add(u).catch(() => {})));
+  } catch {
+    /* offline during install: pages are cached as they are visited instead */
+  }
+}
+
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(PAGES).then((c) => Promise.all(PRECACHE_PAGES.map((u) => c.add(new Request(u, { cache: "reload" })).catch(() => {}))))
-  );
+  event.waitUntil(precache());
   self.skipWaiting();
 });
 
@@ -58,7 +72,7 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(async () => {
           const cache = await caches.open(PAGES);
-          const hit = await cache.match(req);
+          const hit = (await cache.match(req)) || (await cache.match(req, { ignoreSearch: true }));
           if (hit) return hit;
           return (await cache.match("/offline")) || Response.error();
         })
