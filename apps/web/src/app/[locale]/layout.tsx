@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 import { routing } from "@/i18n/routing";
 import { LiveCapsule, Rail, TopBar } from "@/components/Shell";
 import { StatusBar } from "@/components/StatusBar";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 import { ServiceWorker } from "@/components/ServiceWorker";
 import { Toaster } from "@/components/Toaster";
 import { SITE } from "@/lib/site";
@@ -114,7 +114,15 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <ServiceWorker />
         </NextIntlClientProvider>
         {/* Page-view counts only, without cookies; only on Vercel, where /_vercel/insights exists */}
-        {analytics ? <Analytics /> : null}
+        {/* Vercel serves analytics from a per-project path. The package reads it in a way the bundler does not
+            fill in, so it is read here on the server and passed down. */}
+        {analytics ? (
+          <Analytics
+            framework="next"
+            basePath={process.env.NEXT_PUBLIC_VERCEL_OBSERVABILITY_BASEPATH}
+            configString={process.env.NEXT_PUBLIC_VERCEL_OBSERVABILITY_CLIENT_CONFIG}
+          />
+        ) : null}
       </body>
     </html>
   );
