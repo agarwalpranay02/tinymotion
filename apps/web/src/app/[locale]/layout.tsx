@@ -60,7 +60,12 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   const messages = await getMessages();
-  const nonce = (await headers()).get("x-nonce") ?? undefined;
+  const h = await headers();
+  const nonce = h.get("x-nonce") ?? undefined;
+  // Count visits only on the deployed site: Vercel's analytics endpoint does not exist locally or in CI
+  const host = (h.get("host") ?? "").split(":")[0];
+  const local = host === "localhost" || host === "127.0.0.1" || host === "[::1]";
+  const analytics = !local && (process.env.VERCEL === "1" || host === new URL(SITE.url).hostname || host.endsWith(".vercel.app"));
   const t = await getTranslations({ locale, namespace: "meta" });
 
   const jsonLd = {
@@ -109,7 +114,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <ServiceWorker />
         </NextIntlClientProvider>
         {/* Page-view counts only, without cookies; only on Vercel, where /_vercel/insights exists */}
-        {process.env.VERCEL ? <Analytics /> : null}
+        {analytics ? <Analytics /> : null}
       </body>
     </html>
   );
