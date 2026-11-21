@@ -109,4 +109,4 @@ Based on *TinyML-Based Lightweight Deep Learning Model for Human Activity Recogn
 - Code and models: see [LICENSE](LICENSE). The models may be used for personal, educational and research work. For commercial use, write to tinymotion.app@gmail.com.
 - Third-party components: see [NOTICE](NOTICE).
 
-Built by [Pranay Agarwal](https://github.com/agarwalpranay02).
+Built by [Pranay Agarwal](https://pranay-agarwal.vercel.app).
